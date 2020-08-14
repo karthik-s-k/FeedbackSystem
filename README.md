@@ -16,4 +16,5 @@ Heroku deployed application link: https://enigmatic-temple-84045.herokuapp.com/
 * Used cloud MongoDB service (https://cloud.mongodb.com)
 * Used Heroku for deploying production build application (https://dashboard.heroku.com) 
 * Used Stripe for billing and payment transaction (https://dashboard.stripe.com)
+* Used SendGrid for email service (https://app.sendgrid.com)
 * used css from MaterializeCSS template (https://materializecss.com)
