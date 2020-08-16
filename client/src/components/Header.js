@@ -25,9 +25,7 @@ class Header extends Component {
       return (
           <nav>
           <div className="nav-wrapper">
-            <Link 
-              to={this.props.auth ? '/surveys': '/' } 
-              className="left brand-logo">
+            <Link to={this.props.auth ? '/surveys': '/' } className="left brand-logo">
                 Feedback System
             </Link>
             <ul id="nav-mobile" className="right">
