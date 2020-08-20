@@ -8,6 +8,7 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 const Survey = mongoose.model('surveys');
+// var UserModel = mongoose.model('users');
 
 module.exports = app => {
 
@@ -83,10 +84,14 @@ module.exports = app => {
         try {
             await mailer.send();
             await survey.save();
+            
             req.user.credits -= 1;
             const user = await req.user.save();
 
             res.send(user);
+            
+            // await new UserModel(req.user).save(function(){});
+            // res.send(req.user);
         } catch (err) {
             res.status(422).send(err);
         }

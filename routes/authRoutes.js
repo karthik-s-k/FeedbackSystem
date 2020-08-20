@@ -8,12 +8,24 @@ module.exports = app => {
         })
     );
 
-    app.get(
-        '/auth/google/callback', 
-        passport.authenticate('google'),
-        (req, res) => {
-            res.redirect("/surveys");
-        } 
+    app.get('/auth/google/callback',
+        passport.authenticate('google', {
+          successRedirect: '/surveys',
+          failureRedirect: "/"
+        })
+    );
+
+    app.get('/auth/facebook',
+        passport.authenticate('facebook', {
+            scope: "email"
+        })
+    );
+
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+          successRedirect: '/surveys/#',
+          failureRedirect: "/"
+        })
     );
 
     app.get('/api/logout', (req, res) => {
