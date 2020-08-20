@@ -1,6 +1,12 @@
 # FeedbackSystem
 
 Overview of the Feedback System:
+An application to send emails to users to collect their feedback and show it in one place.
+
+Heroku deployed application link: https://enigmatic-temple-84045.herokuapp.com/
+
+
+Workflow:
 
 * User signs up via Google OAuth (Express server + MongoDB + PassportJS)
 * User pays for email credits via stripe (Stripe + MongoDB)
@@ -10,7 +16,8 @@ Overview of the Feedback System:
 * Feedback from the surveyees are tabulated (MongoDB)
 * User can see the report of all teh survey responses (MongoDB + React + redux)
 
-Heroku deployed application link: https://enigmatic-temple-84045.herokuapp.com/
+
+Websites used in the development:
 
 * For OAuth application registration, used Google cloud platform (https://console.cloud.google.com)
 * Used cloud MongoDB service (https://cloud.mongodb.com)
