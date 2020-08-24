@@ -25,3 +25,18 @@ Websites used in the development:
 * Used Stripe for billing and payment transaction (https://dashboard.stripe.com)
 * Used SendGrid for email service (https://app.sendgrid.com)
 * used css from MaterializeCSS template (https://materializecss.com)
+
+
+Testing and deployment:
+
+In development to run the application,
+
+Step 1: Download git repo and run "npm install"
+Step 2: Run "npm run dev"
+Step 3: Run "npx ngrok http 5000", you will get a temperory url valid for 8 hours which will redirect all the requests it receives to http://localhost:5000
+Step 4: Go to "https://app.sendgrid.com", update http post url with ngrok url from the previous step (SendGrid profile, Setting -> Mail Setting -> Event Setting -> Event Webhook). Test the integration and save
+
+In production to release newer version of teh application,
+
+Step 1: Edit and test the application
+Step 2: Check-in code to master branch of heroku using git and push the changes
