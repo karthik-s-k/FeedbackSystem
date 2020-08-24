@@ -1,9 +1,6 @@
-// const mongoose = require('mongoose');
 const keys = require('../config/keys');
 const stripe = require('stripe')(keys.stripeSecretKey);
 const requireLogin = require('../middlewares/requireLogin');
-
-// var UserModel = mongoose.model('users');
 
 module.exports = app => {
     app.post('/api/stripe', requireLogin, async (req, res) => {
@@ -29,8 +26,6 @@ module.exports = app => {
         const user = await req.user.save();
 
         res.send(user);
-        
-        // await new UserModel(req.user).save(function(){});
-        // res.send(req.user);
+
     });
 };

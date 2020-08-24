@@ -8,7 +8,6 @@ const Mailer = require('../services/Mailer');
 const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 
 const Survey = mongoose.model('surveys');
-// var UserModel = mongoose.model('users');
 
 module.exports = app => {
 
@@ -19,6 +18,13 @@ module.exports = app => {
         res.send(surveys);
     });
 
+    app.get('/api/recipients/:surveyId', requireLogin, async (req, res) => {      
+      var surveyId = req.params.surveyId;
+      const recipients = await Survey.find({ _id : surveyId })
+            .select({ recipients: true });
+
+      res.send(recipients);
+  });
 
     app.get('/api/surveys/:surveyId/:choice', (req, res) => {
         res.send('Thanks for voting!');
@@ -27,7 +33,7 @@ module.exports = app => {
     app.post('/api/surveys/webhooks', (req, res) => {
         const p = new Path('/api/surveys/:surveyId/:choice');
     
-        const events = _.chain(req.body)
+        _.chain(req.body)
           .map(({ email, url }) => {
             const match = p.test(new URL(url).pathname);
             if (match) {
@@ -88,10 +94,7 @@ module.exports = app => {
             req.user.credits -= 1;
             const user = await req.user.save();
 
-            res.send(user);
-            
-            // await new UserModel(req.user).save(function(){});
-            // res.send(req.user);
+            res.send(user);            
         } catch (err) {
             res.status(422).send(err);
         }

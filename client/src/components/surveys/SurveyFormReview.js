@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; 
 import formFields from './formFields';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../actions';
 
-const SurveyFormReview = ({ onCancel, formValues, submitSurvey, history }) => {
-    const reviewfields = _.map(formFields, ({ name, label }) => {
+const SurveyFormReview = ({ onCancel, formValues, submitSurvey, history }) => {    
+    const reviewFields = _.map(formFields, ({ name, label }) => {
         return (
             <div key={name}>
                 <label>{label}</label>
@@ -15,12 +15,12 @@ const SurveyFormReview = ({ onCancel, formValues, submitSurvey, history }) => {
                 </div>
             </div>
         );
-    });
+    });   
 
     return (
         <div>
             <h5>Please confirm the entries</h5>
-            {reviewfields}
+            {reviewFields}
             <button className="yellow darken-3 white-text btn-flat" onClick={onCancel} >
                 Back
             </button>
