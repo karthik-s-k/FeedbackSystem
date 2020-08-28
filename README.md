@@ -4,7 +4,7 @@ Overview of the Feedback System:
 An application to send emails to users to collect their feedback and show it in one place.
 
 Heroku deployed application link: https://enigmatic-temple-84045.herokuapp.com/
-
+Note: Use "4242 4242 4242 4242" as credit card number for testing 
 
 Workflow:
 
