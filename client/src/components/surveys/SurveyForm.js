@@ -1,12 +1,18 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SurveyField from './SurveyField';
 import validateEmails from '../../utils/validateEmails';
 import formFields from './formFields';
+import { fetchUser } from '../../actions';
 
 class SurveyForm extends Component {
+    componentDidMount(){
+        this.props.fetchUser(true, this.props.history);
+    }
+
     renderFields() {
         return _.map(formFields, ({ label, name }) => {
             return <Field key={name} component={SurveyField} type="text" label={label} name={name} />
@@ -47,6 +53,11 @@ function validate(values) {
 
     return errors;
 }
+
+SurveyForm = connect(
+    null,
+    { fetchUser }
+)(withRouter(SurveyForm));
 
 export default reduxForm({
     validate,

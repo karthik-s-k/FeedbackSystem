@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
+import ReactSpinner from 'react-bootstrap-spinner';
+import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { fetchRecipients } from '../../actions';
+import { fetchUser, fetchRecipients } from '../../actions';
 
 class RecipientList extends Component {
     componentDidMount(){
+        this.props.fetchUser(true, this.props.history);
+        
         var surveyId = (this.props.location.pathname).replace("/recipientList/", ''); 
         this.props.fetchRecipients(surveyId);
     }
@@ -34,8 +37,17 @@ class RecipientList extends Component {
         return (
             <div>
                 <h5>Recipients of the survey</h5>
-                { this.renderRecipients() }
-                <Route render={({ history}) => (
+                { 
+                this.props.loading ? 
+                  <div style={{ margin: '20% 0% 20% 43%' }}>
+                    <ReactSpinner type="grow" color="primary" size="3" />
+                    <ReactSpinner type="grow" color="warning" size="3" />
+                    <ReactSpinner type="grow" color="danger" size="3" />
+                  </div>
+                  : 
+                  this.renderRecipients() 
+                }
+                <Route render={({ history }) => (
                     <button
                         className="yellow darken-3 white-text btn-flat"
                         onClick={() => { history.push('/surveys') }}
@@ -48,8 +60,8 @@ class RecipientList extends Component {
     }
 }
 
-function mapStateToProps({ recipients }) {
-    return { recipients };
+function mapStateToProps({ recipients, loading }) {
+    return { recipients, loading };
 }
 
-export default connect(mapStateToProps, { fetchRecipients })(RecipientList);
+export default connect(mapStateToProps, { fetchUser, fetchRecipients })(withRouter(RecipientList));

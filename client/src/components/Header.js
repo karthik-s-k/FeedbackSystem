@@ -1,23 +1,32 @@
 import React, { Component } from 'react';
+import ReactSpinner from 'react-bootstrap-spinner';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Payments from './Payments';
 
 class Header extends Component {
+
   renderComponent() {
     switch(this.props.auth) {
       case null:
         return ;
       case false:
         return [
-          <li key="1"><a href="/auth/google">Login with Google</a></li>,
-          <li key="2"><a href="/auth/facebook">Login with Facebook</a></li>
+          <li key="1"><a href="/auth/google" style={{ textDecoration: 'none' }}>Login with Google</a></li>,
+          <li key="2"><a href="/auth/facebook" style={{ textDecoration: 'none' }}>Login with Facebook</a></li>
         ];
       default:
         return [
-            <li key="1"><Payments /></li>,
-            <li key="3" style={{ margin: '0 10px'}}>Credits: {this.props.auth.credits}</li>,
-            <li key="2"><a href="/api/logout">Logout</a></li>
+            <li key="1"><Payments /></li>,            
+            <li key="2" style={{ margin: '0 10px'}}>
+              Credits: {
+                this.props.creditsLoading ? 
+                  <ReactSpinner type="grow" color="light" size="1.25" /> 
+                  : this.props.auth.credits
+              }
+            </li>,
+            <li key="3"><a href="/surveys">Surveys</a></li>,
+            <li key="4"><a href="/api/logout">Logout</a></li>
         ];
     }
   }
@@ -45,8 +54,8 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ auth }){
-  return { auth };
+function mapStateToProps({ auth, creditsLoading }){
+  return { auth, creditsLoading };
 }
 
 export default connect(mapStateToProps)(Header);

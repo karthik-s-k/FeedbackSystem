@@ -11,12 +11,12 @@ import Recipients from './surveys/RecipientList';
 
 class App extends Component {
     componentDidMount() {
-        this.props.fetchUser();
+        this.props.fetchUser(false);
     }
 
     render() {
         return (
-            <div className="container">
+            <div className="container" style={{ width: '100%' }}>
                 <BrowserRouter>
                     <div>
                         <Header />

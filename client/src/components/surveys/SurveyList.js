@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import ReactSpinner from 'react-bootstrap-spinner';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchSurveys } from '../../actions';
+import { fetchUser, fetchSurveys } from '../../actions';
 
 class SurveyList extends Component {
     componentDidMount(){
+        this.props.fetchUser(true, this.props.history);
         this.props.fetchSurveys();
     }
 
@@ -12,7 +14,7 @@ class SurveyList extends Component {
         return this.props.surveys.reverse().map(survey => {
           return (
               <div className="card darken-1" key={survey._id}>
-                <Link to={"/recipientList/" + survey._id} >
+                <Link to={"/recipientList/" + survey._id} style={{ textDecoration: 'none' }}>
                   <div className="card-content">
                     <span className="card-title">{survey.title}</span>
                     <p>
@@ -35,14 +37,23 @@ class SurveyList extends Component {
     render() {
         return (
             <div>
-                { this.renderSurveys() }
+                { 
+                this.props.loading ? 
+                  <div style={{ margin: '20% 0% 0% 43%' }}>
+                    <ReactSpinner type="grow" color="primary" size="3" />
+                    <ReactSpinner type="grow" color="warning" size="3" />
+                    <ReactSpinner type="grow" color="danger" size="3" />
+                  </div>
+                  : 
+                  this.renderSurveys() 
+                }
             </div>
         );
     }
 }
 
-function mapStateToProps({ surveys }) {
-    return { surveys };
+function mapStateToProps({ surveys, loading }) {
+    return { surveys, loading };
 }
 
-export default connect(mapStateToProps, { fetchSurveys })(SurveyList);
+export default connect(mapStateToProps, { fetchUser, fetchSurveys })(withRouter(SurveyList));
