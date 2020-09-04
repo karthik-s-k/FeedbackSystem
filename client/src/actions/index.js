@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 import { 
     FETCH_USER,
     FETCH_SURVEYS, FETCH_SURVEYS_LOADING, FETCH_SURVEYS_LOADED,
@@ -8,8 +7,10 @@ import {
     SUBMIT_TOKEN_LOADING, SUBMIT_TOKEN_LOADED
 } from './types';
 
+
 export const fetchUser = (verify, history) => async dispatch => {
     const res = await axios.get('/api/current_user');
+
     if (verify && (res.data === null || res.data === undefined || res.data === "")) {
         history.push('/api/logout');
         history.push('/');
@@ -28,11 +29,18 @@ export const handleToken = (token) => async dispatch => {
 
 export const submitSurvey = (values, history) => async dispatch => {
     dispatch({ type: SUBMIT_SURVEY_LOADING });
-    const res = await axios.post('/api/surveys', values);
     
-    history.push('/surveys');
-    dispatch({ type: FETCH_USER, payload: res.data });
-    dispatch({ type: SUBMIT_SURVEY_LOADED, payload: res.data });
+    try {
+        const res = await axios.post('/api/surveys', values);
+        history.push('/surveys');
+
+        dispatch({ type: FETCH_USER, payload: res.data });
+        dispatch({ type: SUBMIT_SURVEY_LOADED, payload: res.data });
+    }
+    catch(ex) {        
+        dispatch({ type: FETCH_USER, payload: "" });
+        dispatch({ type: SUBMIT_SURVEY_LOADED, payload: "" });
+    }
 };
 
 export const fetchSurveys = () => async dispatch => {

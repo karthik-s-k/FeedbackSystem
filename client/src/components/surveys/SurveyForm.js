@@ -7,10 +7,27 @@ import SurveyField from './SurveyField';
 import validateEmails from '../../utils/validateEmails';
 import formFields from './formFields';
 import { fetchUser } from '../../actions';
+import Alert from 'react-s-alert';
 
 class SurveyForm extends Component {
     componentDidMount(){
         this.props.fetchUser(true, this.props.history);
+    }
+
+    componentDidUpdate() {        
+        if (this.props.auth != null && this.props.auth.credits != null && this.props.auth.credits < 1) {
+           this.showAlert(); 
+        }
+    }
+
+    showAlert() {
+        Alert.closeAll();
+        Alert.warning('Please add credits to send survey', {
+            position: 'top',
+            effect: 'stackslide',
+            html: true,
+            timeout: 5000
+        });
     }
 
     renderFields() {
@@ -22,6 +39,7 @@ class SurveyForm extends Component {
     render() {
         return (
             <div>
+                <Alert stack={{ limit: 15, spacing: 10 }} timeout={8000} />
                 <form onSubmit={this.props.handleSubmit(this.props.onSurveySubmit)}>
                     { this.renderFields() }
                     <Link to="/surveys">
@@ -54,8 +72,12 @@ function validate(values) {
     return errors;
 }
 
+function mapStateToProps({ auth }) {
+    return { auth };
+}
+
 SurveyForm = connect(
-    null,
+    mapStateToProps,
     { fetchUser }
 )(withRouter(SurveyForm));
 
