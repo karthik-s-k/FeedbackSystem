@@ -43,3 +43,6 @@ In production to release newer version of the application,
 
 * Step 1: Edit and test the application
 * Step 2: Check-in code to master branch of heroku using git and push the changes
+  - git add .
+  - git commit -m "Comment"
+  - git push heroku master
